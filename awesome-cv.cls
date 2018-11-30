@@ -88,6 +88,8 @@
   pdfsubject={},
   pdfkeywords={}
 }
+% Needed for multicolumn languages
+\RequirePackage{multicol}
 
 
 %-------------------------------------------------------------------------------
@@ -151,6 +153,9 @@
 \newbool{acvSectionColorHighlight}
 \setbool{acvSectionColorHighlight}{true}
 
+\newbool{acvHeaderHighlight}
+\setbool{acvHeaderHighlight}{true}
+
 % Awesome section color
 \def\@sectioncolor#1#2#3{%
   \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
@@ -161,7 +166,7 @@
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
 % Set the FontAwesome font to be up-to-date.
-\newfontfamily\FA[Path=\@fontdir]{FontAwesome}
+\setfontfamily\FA[Path=\@fontdir]{FontAwesome}
 % Set font for header (default is Roboto)
 \newfontfamily\headerfont[
   Path=\@fontdir,
@@ -188,23 +193,24 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{graytext} #1}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{awesome} #1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
-\newcommand*{\headerquotestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\itshape\color{darktext} #1}}
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{24pt}{1em}\headerfontlight\ifbool{acvHeaderHighlight}{\color{white}}{\color{awesome}} #1}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{24pt}{1em}\headerfont\bfseries\ifbool{acvHeaderHighlight}{\color{lighttext}}{\color{awesome!85}} #1}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\ifbool{acvHeaderHighlight}{\color{white}}{\color{darkgray}} #1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{10pt}{1em}\headerfont\itshape\color{gray} #1}}
+\newcommand*{\headeraboutstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\ifbool{acvHeaderHighlight}{\color{lighttext}}{\color{text}} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{8.8pt}{1em}\headerfont\color{text} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\itshape\color{darktext} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
 \newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
-\newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
-\newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
+\newcommand*{\subsectionstyle}[1]{{\fontsize{13pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
+\newcommand*{\paragraphstyle}{\fontsize{11pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{graytext} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
-\newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{11pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+\newcommand*{\descriptionstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
 % For elements of subentry
 \newcommand*{\subentrytitlestyle}[1]{{\fontsize{8pt}{1em}\bodyfont\mdseries\color{graytext} #1}}
@@ -215,13 +221,15 @@
 
 % For elements of honor
 \newcommand*{\honortitlestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
-\newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\fontseries{sb}\color{darktext} #1}}
 \newcommand*{\honordatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
 \newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{white} #1}}
+
+\newcommand*{\languagetypestyle}[1]{{\fontsize{11pt}{1em}\bodyfont\color{darktext} #1}}
+\newcommand*{\languageproficiencystyle}[1]{{\fontsize{10pt}{1em}\bodyfont\itshape\color{awesome!85} #1}}
 
 % For elements of the cover letter
 \newcommand*{\lettersectionstyle}[1]{{\fontsize{14pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
@@ -231,7 +239,7 @@
 \newcommand*{\letterdatestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\bodyfontlight\upshape\color{graytext}}
 \newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{lighttext} #1}}
+\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{text} #1}}
 
 
 %-------------------------------------------------------------------------------
@@ -323,6 +331,10 @@
 % Usage: \extrainfo{<extra informations>}
 \newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
 
+% Defines writer's about (optional)
+% Usage: \about{<about>}
+\newcommand*{\about}[1]{\def\@about{#1}}
+
 % Defines writer's quote (optional)
 % Usage: \quote{<quote>}
 \renewcommand*{\quote}[1]{\def\@quote{#1}}
@@ -370,8 +382,10 @@
 \newcommand{\acvHeaderAfterNameSkip}{.4mm}
 \newcommand{\acvHeaderAfterPositionSkip}{.4mm}
 \newcommand{\acvHeaderAfterAddressSkip}{-.5mm}
+\newcommand{\acvHeaderAfterAboutSkip}{.4mm}
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+\newcommand{\acvHeaderBeforeSocialSkip}{0mm}
 \newcommand{\acvHeaderAfterSocialSkip}{6mm}
 \newcommand{\acvHeaderAfterQuoteSkip}{5mm}
 
@@ -393,6 +407,108 @@
 
 % Use to execute conditional statements by checking empty string
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
+
+\newcommand*{\avcHeaderBox}[1][C]{%
+  \vspace{6mm}
+  \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
+  \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
+  \\[\acvHeaderAfterNameSkip]%
+  \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
+  \ifboolexpr{test {\ifundef{\@address}} or bool {acvHeaderHighlight}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
+  \ifbool{acvHeaderHighlight}{}{\avcHeaderSocial}%
+  \ifthenelse{\isundefined{\@about}}{}{\headeraboutstyle{\@about\\[\acvHeaderAfterAboutSkip]}}%
+  \vspace{6mm}
+}
+
+\newcommand*{\avcHeaderSocial}{
+  \vspace{\acvHeaderBeforeSocialSkip}
+  % \centering
+  \headersocialstyle{%
+    \newbool{isstart}%
+    \setbool{isstart}{true}%
+    \ifthenelse{\isundefined{\@email}}%
+      {}%
+      {%
+        \href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
+        \setbool{isstart}{false}%
+      }%
+    \ifthenelse{\isundefined{\@mobile}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \faMobile\acvHeaderIconSep\@mobile%
+      }%
+    \ifboolexpr{test {\ifundef{\@address}} or not bool {acvHeaderHighlight}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \faMapMarker\acvHeaderIconSep\@address%
+      }%
+    \ifthenelse{\isundefined{\@homepage}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
+      }%
+    \ifthenelse{\isundefined{\@github}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://github.com/\@github}{\faGithubSquare\acvHeaderIconSep\ github.com/\@github}%
+      }%
+    \ifthenelse{\isundefined{\@gitlab}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://gitlab.com/\@gitlab}{\faGitlab\acvHeaderIconSep\@gitlab}%
+      }%
+    \ifthenelse{\isundefined{\@stackoverflowid}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
+      }%
+    \ifthenelse{\isundefined{\@linkedin}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\acvHeaderIconSep\@linkedin}%
+      }%
+    \ifthenelse{\isundefined{\@twitter}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://twitter.com/\@twitter}{\faTwitter\acvHeaderIconSep\@twitter}%
+      }%
+    \ifthenelse{\isundefined{\@skype}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \faSkype\acvHeaderIconSep\@skype%
+      }%
+    \ifthenelse{\isundefined{\@reddit}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://www.reddit.com/user/\@reddit}{\faReddit\acvHeaderIconSep\@reddit}%
+      }%
+    \ifthenelse{\isundefined{\@xing}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
+      }%
+    \ifthenelse{\isundefined{\@extrainfo}}%
+      {}%
+      {%
+        \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+        \@extrainfo%
+      }%
+  } \\[\acvHeaderAfterSocialSkip]%
+  \ifthenelse{\isundefined{\@quote}}%
+    {}%
+    {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
+}
 
 
 %-------------------------------------------------------------------------------
@@ -427,95 +543,28 @@
   \begin{minipage}[c]{\headerphotowidth}%
     \ifthenelse{\equal{\@photoalign}{left}}{\raggedright\drawphoto}{}
   \end{minipage}
-  \begin{minipage}[c]{\headertextwidth}
-    \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
-    \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
-    \\[\acvHeaderAfterNameSkip]%
-    \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
-    \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
-    \headersocialstyle{%
-      \newbool{isstart}%
-      \setbool{isstart}{true}%
-      \ifthenelse{\isundefined{\@mobile}}%
-        {}%
-        {%
-          \faMobile\acvHeaderIconSep\@mobile%
-          \setbool{isstart}{false}%
-        }%
-      \ifthenelse{\isundefined{\@email}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
-        }%
-      \ifthenelse{\isundefined{\@homepage}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
-        }%
-      \ifthenelse{\isundefined{\@github}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://github.com/\@github}{\faGithubSquare\acvHeaderIconSep\@github}%
-        }%
-      \ifthenelse{\isundefined{\@gitlab}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://gitlab.com/\@gitlab}{\faGitlab\acvHeaderIconSep\@gitlab}%
-        }%
-      \ifthenelse{\isundefined{\@stackoverflowid}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
-        }%
-      \ifthenelse{\isundefined{\@linkedin}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\acvHeaderIconSep\@linkedin}%
-        }%
-      \ifthenelse{\isundefined{\@twitter}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://twitter.com/\@twitter}{\faTwitter\acvHeaderIconSep\@twitter}%
-        }%
-      \ifthenelse{\isundefined{\@skype}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \faSkype\acvHeaderIconSep\@skype%
-        }%
-      \ifthenelse{\isundefined{\@reddit}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.reddit.com/user/\@reddit}{\faReddit\acvHeaderIconSep\@reddit}%
-        }%
-      \ifthenelse{\isundefined{\@xing}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
-        }%
-      \ifthenelse{\isundefined{\@extrainfo}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \@extrainfo%
-        }%
-    } \\[\acvHeaderAfterSocialSkip]%
-    \ifthenelse{\isundefined{\@quote}}%
-      {}%
-      {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
-  \end{minipage}%
+  \ifbool{acvHeaderHighlight}{%
+    \fcolorbox{awesome}{awesome}{
+      \hspace{5mm}
+      \begin{minipage}[c]{\dimexpr\headertextwidth-5mm}
+        \avcHeaderBox[#1]
+      \end{minipage}
+      \hspace{2.0cm}
+    }
+  }{%
+    \begin{minipage}[c]{\headertextwidth}
+      \avcHeaderBox[#1]
+    \end{minipage}
+  }
   \begin{minipage}[c]{\headerphotowidth}%
     \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
   \end{minipage}
+  \ifbool{acvHeaderHighlight}{%
+    \begin{minipage}[c]{\textwidth}
+      \centering
+      \avcHeaderSocial
+    \end{minipage}%
+  }
 }
 
 % Define a footer for CV
@@ -533,7 +582,8 @@
   \vspace{\acvSectionTopSkip}
   \sectionstyle{#1}
   \phantomsection
-  \color{gray}\vhrulefill{0.9pt}
+  \vspace{1mm}
+  \color{awesome}\hrule height 0.9pt
 }
 
 % Define a subsection for CV
@@ -552,7 +602,7 @@
   \paragraphstyle
 }{%
   \par
-  \vspace{2mm}
+  % \vspace{2mm}
 }
 
 % Define an environment for cventry
@@ -565,7 +615,7 @@
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[5]{%
-  \vspace{-2.0mm}
+  \vspace{-1.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
@@ -591,7 +641,7 @@
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
     \setlength\leftskip{0.2cm}
     \subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
-      {\subentrydatestyle{#3}}{}
+      {\subentrydatestyle{#3}}{} \\
     \ifthenelse{\equal{#1}{}}
       {}
       {\subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
@@ -619,37 +669,40 @@
   \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} & \honorlocationstyle{#3} \\
 }
 
-% Define an environment for cvskill
-\newenvironment{cvskills}{%
-  \vspace{\acvSectionContentTopSkip}
-  \vspace{-2.0mm}
-  \begin{center}
-    \setlength\tabcolsep{1ex}
-    \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
-}{%
-    \end{tabular*}
-  \end{center}
-}
 % Define a line of cv information(skill)
-% Usage: \cvskill{<type>}{<skillset>}
-\newcommand*{\cvskill}[2]{%
-	\skilltypestyle{#1} & \skillsetstyle{#2} \\
+% Usage: \cvskill{<skillset>}
+\newcommand*{\cvskill}[1]{%
+  \tcbox[nobeforeafter,colback=awesome,top=2pt,bottom=2pt,left=2pt,right=2pt,height=1.8em]{\skillsetstyle{#1}}
 }
 
 % Define an environment for cvitems(for cventry)
 \newenvironment{cvitems}{%
-  \vspace{-4.0mm}
+  \vspace{-3.0mm}
   \begin{justify}
   \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
     \setlength{\parskip}{0pt}
+    \setlength{\itemsep}{3pt}
     \renewcommand{\labelitemi}{\bullet}
 }{%
   \end{itemize}
   \end{justify}
-  \vspace{-4.0mm}
+  \vspace{-3.0mm}
 }
 
+
+\newenvironment{cvlanguages}[1][3]{%
+  \begin{multicols}{#1}
+  \linespread{1.1}\selectfont
+}{%
+  \end{multicols}
+  \vspace{-5pt}
+}
+
+\newcommand*{\cvlanguage}[2]{%
+  \languagetypestyle{#1}\\
+  \languageproficiencystyle{#2}
+  \vfill\columnbreak
+}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
